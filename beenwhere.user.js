@@ -518,6 +518,7 @@
                     if (bwSettings[shortcut] !== null) {
                         if (bwSettings[shortcut] === "" || bwSettings[shortcut] === "-1" || bwSettings[shortcut].match(/\(0,-\d\)/) !== null) {
                             bwSettings[shortcut] = null;
+                        }
                     }
                 }
             );
