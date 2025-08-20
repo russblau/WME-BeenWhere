@@ -783,7 +783,11 @@
 
             LoadSettings();
 
-            WazeWrap.Interface.ShowScriptUpdate("WME BeenWhere", GM_info.script.version, updateMessage, "https://greasyfork.org/en/scripts/546543-wme-beenwhere", ""/* insert Discuss URL */);
+            WazeWrap.Interface.ShowScriptUpdate("WME BeenWhere", 
+                                                GM_info.script.version, 
+                                                updateMessage, 
+                                                "https://greasyfork.org/en/scripts/546543-wme-beenwhere", 
+                                                "https://www.waze.com/discuss/t/script-wme-beenwhere/389178");
             console.log("WME BeenWhere: loaded!");
         });
     });
