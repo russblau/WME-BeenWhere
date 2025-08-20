@@ -2,6 +2,7 @@
 // @name            WME BeenWhere
 // @namespace       https://greasyfork.org/en/users/186508-russ-blau
 // @description     Drop shapes on the map to help visualize where you have been editing, or want to edit
+// @author          russblau
 // @license         MIT
 // @include         https://www.waze.com/editor*
 // @include         https://www.waze.com/*/editor*
@@ -12,16 +13,13 @@
 // @require         https://greasyfork.org/scripts/27254-clipboard-js/code/clipboardjs.js
 // @require         https://update.greasyfork.org/scripts/28502/187735/jQuery%20UI%20-%20v1114.js
 // @require         https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js
-// @version         2025.07.30.01
+// @version         2025.08.20.01
 // @grant           unsafeWindow
 // ==/UserScript==
 //---------------------------------------------------------------------------------------
 
 /* ecmaVersion 2017 */
-/* global $ */
-/* global WazeWrap */
-/* global Clipboard */
-/* global turf */
+/* global $, WazeWrap, Clipboard, turf */
 /* jslint esversion: 11 */
 
 (function () {
@@ -465,15 +463,6 @@
                 convertCoords(loadedSettings);
             }
 
-            const shortcutDefaults = {
-                NewBoxShortcut: '0,-1',
-                NewUserRectShortcut: '0,-2',
-                NewUserCircleShortcut: '0,-3',
-                RemoveLastShapeShortcut: '0,-4',
-                RedoLastShapeShortcut: '0,-5',
-                RemoveAllShapesShortcut: '0,-6'
-            };
-
             const defaultSettings = {
                 converted: true,
                 layerHistory: [],
@@ -485,12 +474,12 @@
                 CP4: "#00FD22",
                 DrawShapeBorder: true,
                 FillShape: false,
-                NewBoxShortcut: '0,-1',
-                NewUserRectShortcut: '0,-2',
-                NewUserCircleShortcut: '0,-3',
-                RemoveLastShapeShortcut: '0,-4',
-                RedoLastShapeShortcut: '0,-5',
-                RemoveAllShapesShortcut: '0,-6',
+                NewBoxShortcut: null,
+                NewUserRectShortcut: null,
+                NewUserCircleShortcut: null,
+                RemoveLastShapeShortcut: null,
+                RedoLastShapeShortcut: null,
+                RemoveAllShapesShortcut: null,
                 SettingsLocTop: "40%",
                 SettingsLocLeft: "50%",
                 Groups: {"default": []},
@@ -526,8 +515,9 @@
             ['NewBoxShortcut', 'NewUserRectShortcut', 'NewUserCircleShortcut',
              'RemoveLastShapeShortcut', 'RedoLastShapeShortcut', 'RemoveAllShapesShortcut'].forEach(
                 shortcut => {
-                    if (bwSettings[shortcut] === "" || bwSettings[shortcut] === "-1") {
-                        bwSettings[shortcut] = shortcutDefaults[shortcut];
+                    if (bwSettings[shortcut] !== null) {
+                        if (bwSettings[shortcut] === "" || bwSettings[shortcut] === "-1" || bwSettings[shortcut].match(/\(0,-\d\)/) !== null) {
+                            bwSettings[shortcut] = null;
                     }
                 }
             );
